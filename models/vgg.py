@@ -1,4 +1,4 @@
-"""Imported from https://github.com/xternalz/WideResNet-pytorch/blob/master/wideresnet.py
+"""Imported from https://github.com/pytorch/vision/blob/master/torchvision/models/vgg.py
 and added support for the 1x32x32 mel spectrogram for the speech recognition.
 
 Karen Simonyan, Andrew Zisserman: Very Deep Convolutional Networks for Large-Scale Image Recognition
