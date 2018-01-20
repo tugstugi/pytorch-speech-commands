@@ -1,6 +1,13 @@
 """Google speech commands dataset."""
 __author__ = 'Yuan Xu'
 
+import os
+import numpy as np
+
+import librosa
+
+from torch.utils.data import Dataset
+
 CLASSES = 'unknown, silence, yes, no, up, down, left, right, on, off, stop, go'.split(', ')
 
 class SpeechCommandsDataset(Dataset):

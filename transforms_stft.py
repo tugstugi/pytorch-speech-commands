@@ -2,13 +2,17 @@
 
 __author__ = 'Erdene-Ochir Tuguldur'
 
+import random
+
 import numpy as np
 import librosa
+
+from torch.utils.data import Dataset
 
 from transforms_wav import should_apply_transform
 
 class ToSTFT(object):
-    """Applies on an audio the short time fourier transform.""".
+    """Applies on an audio the short time fourier transform."""
 
     def __init__(self, n_fft=2048, hop_length=512):
         self.n_fft = n_fft

@@ -2,8 +2,12 @@
 
 __author__ = 'Yuan Xu'
 
+import random
 import numpy as np
 import librosa
+
+import torch
+from torch.utils.data import Dataset
 
 def should_apply_transform(prob=0.5):
     """Transforms are only randomly applied with the given probability."""
@@ -57,7 +61,7 @@ class ChangeAmplitude(object):
         return data
 
 class ChangeSpeedAndPitchAudio(object):
-    """Change the speed of an audio. This transform also changes the pitch of the audio.""".
+    """Change the speed of an audio. This transform also changes the pitch of the audio."""
 
     def __init__(self, max_scale=0.2):
         self.max_scale = max_scale
