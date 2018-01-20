@@ -50,14 +50,14 @@ class NetworkBlock(nn.Module):
         return self.layer(x)
 
 class WideResNet(nn.Module):
-    def __init__(self, depth, num_classes, input_channels=3, widen_factor=1, dropRate=0.0):
+    def __init__(self, depth, num_classes, in_channels=3, widen_factor=1, dropRate=0.0):
         super(WideResNet, self).__init__()
         nChannels = [16, 16*widen_factor, 32*widen_factor, 64*widen_factor]
         assert((depth - 4) % 6 == 0)
         n = (depth - 4) // 6
         block = BasicBlock
         # 1st conv before any network block
-        self.conv1 = nn.Conv2d(input_channels, nChannels[0], kernel_size=3, stride=1,
+        self.conv1 = nn.Conv2d(in_channels, nChannels[0], kernel_size=3, stride=1,
                                padding=1, bias=False)
         # 1st block
         self.block1 = NetworkBlock(n, nChannels[0], nChannels[1], block, 1, dropRate)
