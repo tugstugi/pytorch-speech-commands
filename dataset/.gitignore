@@ -1,0 +1,5 @@
+*.tar.gz
+speech_commands/audio
+speech_commands/train
+speech_commands/valid
+speech_commands/test
