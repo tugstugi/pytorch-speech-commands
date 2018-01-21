@@ -101,6 +101,7 @@ if args.optim == 'sgd':
 else:
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)
 
+start_timestamp = int(time.time()*1000)
 start_epoch = 0
 best_accuracy = 0
 best_loss = 1e100
@@ -250,11 +251,11 @@ def valid(epoch):
     if accuracy > best_accuracy:
         best_accuracy = accuracy
         torch.save(checkpoint, 'checkpoints/best-accuracy-speech-commands-checkpoint-%s.pth' % full_name)
-        torch.save(model, 'best-accuracy-speech-commands-model-%s.pth' % full_name)
+        torch.save(model, '%d-best-accuracy-speech-commands-model-%s.pth' % (start_timestamp, full_name))
     if epoch_loss < best_loss:
         best_loss = epoch_loss
         torch.save(checkpoint, 'checkpoints/best-loss-speech-commands-checkpoint-%s.pth' % full_name)
-        torch.save(model, 'best-loss-speech-commands-model-%s.pth' % full_name)
+        torch.save(model, '%d-best-loss-speech-commands-model-%s.pth' % (start_timestamp, full_name))
 
     torch.save(checkpoint, 'checkpoints/last-speech-commands-checkpoint.pth')
     del checkpoint  # reduce memory

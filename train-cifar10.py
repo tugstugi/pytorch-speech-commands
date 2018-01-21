@@ -85,6 +85,7 @@ if args.optim == 'sgd':
 else:
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)
 
+start_timestamp = int(time.time()*1000)
 start_epoch = 0
 best_accuracy = 0
 global_step = 0
