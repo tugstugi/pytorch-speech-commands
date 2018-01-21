@@ -14,6 +14,8 @@ from torch.autograd import Variable
 import torchvision
 from torchvision.transforms import *
 
+from tensorboardX import SummaryWriter
+
 import models
 
 parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -27,9 +29,9 @@ parser.add_argument("--optim", choices=['sgd', 'adam'], default='sgd', help='cho
 parser.add_argument("--learning-rate", type=float, default=0.1, help='learning rate for optimization')
 parser.add_argument("--lr-scheduler", choices=['plateau', 'step'], default='plateau', help='method to adjust learning rate')
 parser.add_argument("--lr-scheduler-patience", type=int, default=2, help='lr scheduler plateau: Number of epochs with no improvement after which learning rate will be reduced')
-parser.add_argument("--lr-scheduler-step-size", type=int, default=2, help='lr scheduler step: number of epochs of learning rate decay.')
+parser.add_argument("--lr-scheduler-step-size", type=int, default=50, help='lr scheduler step: number of epochs of learning rate decay.')
 parser.add_argument("--lr-scheduler-gamma", type=float, default=0.1, help='learning rate is multiplied by the gamma to decrease it')
-parser.add_argument("--max-epochs", type=int, default=50, help='max number of epochs')
+parser.add_argument("--max-epochs", type=int, default=150, help='max number of epochs')
 parser.add_argument("--resume", type=str, help='checkpoint file to resume')
 parser.add_argument("--model", choices=['vgg19_bn', 'wideresnet28_10', 'wideresnet28_10D', 'wideresnet52_10'], default='vgg19_bn', help='model of NN')
 args = parser.parse_args()
@@ -83,6 +85,7 @@ else:
 
 start_epoch = 0
 best_accuracy = 0
+global_step = 0
 
 if args.resume:
     print("resuming a checkpoint '%s'" % args.resume)
@@ -94,6 +97,7 @@ if args.resume:
     best_accuracy = checkpoint.get('accuracy', best_accuracy)
     #best_loss = checkpoint.get('loss', best_loss)
     start_epoch = checkpoint.get('epoch', start_epoch)
+    global_step = checkpoint.get('step', global_step)
 
     del checkpoint  # reduce memory
 
@@ -105,8 +109,15 @@ else:
 def get_lr():
     return optimizer.param_groups[0]['lr']
 
+writer = SummaryWriter(comment=('_cifar10_' + full_name))
+
 def train(epoch):
+    global global_step
+
     print("epoch %3d with lr=%.02e" % (epoch, get_lr()))
+    phase = 'train'
+    writer.add_scalar('%s/learning_rate' % phase,  get_lr(), global_step)
+
     model.train()  # Set model to training mode
 
     running_loss = 0.0
@@ -132,11 +143,14 @@ def train(epoch):
         optimizer.step()
 
         # statistics
-        running_loss += loss.data[0]
         it += 1
+        global_step += 1
+        running_loss += loss.data[0]
         pred = outputs.data.max(1, keepdim=True)[1]
         correct += pred.eq(targets.data.view_as(pred)).sum()
         total += targets.size(0)
+
+        writer.add_scalar('%s/loss' % phase, loss.data[0], global_step)
 
         # update the progress bar
         pbar.set_postfix({
@@ -144,11 +158,15 @@ def train(epoch):
             'acc': "%.02f%%" % (100*correct/total)
         })
 
+    accuracy = correct/total
     epoch_loss = running_loss / it
+    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, global_step)
+    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, global_step)
 
 def test(epoch):
-    global best_accuracy
+    global best_accuracy, global_step
 
+    phase = 'test'
     model.eval()  # Set model to evaluate mode
 
     running_loss = 0.0
@@ -171,11 +189,14 @@ def test(epoch):
         loss = criterion(outputs, targets)
 
         # statistics
-        running_loss += loss.data[0]
         it += 1
+        global_step += 1
+        running_loss += loss.data[0]
         pred = outputs.data.max(1, keepdim=True)[1]
         correct += pred.eq(targets.data.view_as(pred)).sum()
         total += targets.size(0)
+
+        writer.add_scalar('%s/loss' % phase, loss.data[0], global_step)
 
         # update the progress bar
         pbar.set_postfix({
@@ -185,9 +206,12 @@ def test(epoch):
 
     accuracy = correct/total
     epoch_loss = running_loss / it
+    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, global_step)
+    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, global_step)
 
     checkpoint = {
         'epoch': epoch,
+        'step': global_step,
         'state_dict': model.state_dict(),
         #'loss': epoch_loss,
         'accuracy': accuracy,
