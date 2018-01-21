@@ -10,6 +10,7 @@ from tqdm import *
 
 import torch
 from torch.autograd import Variable
+from torch.utils.data import DataLoader
 
 import torchvision
 from torchvision.transforms import *
@@ -52,10 +53,10 @@ train_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=True,
                 RandomHorizontalFlip(),
                 to_tensor_and_normalize
             ]))
-train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=args.train_batch_size, shuffle=True, num_workers=args.dataload_workers_nums)
+train_dataloader = DataLoader(train_dataset, batch_size=args.train_batch_size, shuffle=True, num_workers=args.dataload_workers_nums)
 
 test_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=False, download=True, transform=to_tensor_and_normalize)
-test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
+test_dataloader = DataLoader(test_dataset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
