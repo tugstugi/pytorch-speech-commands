@@ -196,10 +196,10 @@ def test(epoch):
 
     if accuracy > best_accuracy:
         best_accuracy = accuracy
-        torch.save(checkpoint, 'best-checkpoint-%s.pth' % full_name)
-        torch.save(model, 'best-model-%s.pth' % full_name)
+        torch.save(checkpoint, 'checkpoints/best-cifar10-checkpoint-%s.pth' % full_name)
+        torch.save(model, 'best-cifar10-model-%s.pth' % full_name)
 
-    torch.save(checkpoint, 'checkpoint.pth')
+    torch.save(checkpoint, 'checkpoints/last-cifar10-checkpoint.pth')
     del checkpoint  # reduce memory
 
     return epoch_loss
