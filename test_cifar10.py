@@ -10,6 +10,7 @@ from tqdm import *
 
 import torch
 from torch.autograd import Variable
+from torch.utils.data import DataLoader
 
 import torchvision
 from torchvision.transforms import *
@@ -40,7 +41,7 @@ to_tensor_and_normalize = Compose([
 ])
 
 test_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=False, download=True, transform=to_tensor_and_normalize)
-test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
+test_dataloader = DataLoader(test_dataset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
@@ -83,7 +84,9 @@ def test():
             'acc': "%.02f%%" % (100*correct/total)
         })
 
-    print("accuracy: %f%%, loss: %f" % (100*correct/total, running_loss / it))
+    accuracy = correct/total
+    epoch_loss = running_loss / it
+    print("accuracy: %f%%, loss: %f" % (100*accuracy, epoch_loss))
     print("confusion matrix:")
     print(confusion_matrix.value())
 
