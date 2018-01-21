@@ -119,7 +119,7 @@ def train(epoch):
 
     print("epoch %3d with lr=%.02e" % (epoch, get_lr()))
     phase = 'train'
-    writer.add_scalar('%s/learning_rate' % phase,  get_lr(), global_step)
+    writer.add_scalar('%s/learning_rate' % phase,  get_lr(), epoch)
 
     model.train()  # Set model to training mode
 
@@ -163,10 +163,8 @@ def train(epoch):
 
     accuracy = correct/total
     epoch_loss = running_loss / it
-    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, global_step)
-    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, global_step)
-    writer.add_scalar('%s/accuracy_by_epoch' % phase, 100*accuracy, epoch)
-    writer.add_scalar('%s/epoch_loss_by_epoch' % phase, epoch_loss, epoch)
+    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, epoch)
+    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, epoch)
 
 def test(epoch):
     global best_accuracy, global_step
@@ -211,10 +209,8 @@ def test(epoch):
 
     accuracy = correct/total
     epoch_loss = running_loss / it
-    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, global_step)
-    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, global_step)
-    writer.add_scalar('%s/accuracy_by_epoch' % phase, 100*accuracy, epoch)
-    writer.add_scalar('%s/epoch_loss_by_epoch' % phase, epoch_loss, epoch)
+    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, epoch)
+    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, epoch)
 
     checkpoint = {
         'epoch': epoch,
@@ -228,7 +224,7 @@ def test(epoch):
     if accuracy > best_accuracy:
         best_accuracy = accuracy
         torch.save(checkpoint, 'checkpoints/best-cifar10-checkpoint-%s.pth' % full_name)
-        torch.save(model, 'best-cifar10-model-%s.pth' % full_name)
+        torch.save(model, '%d-best-cifar10-model-%s.pth' % (start_timestamp, full_name))
 
     torch.save(checkpoint, 'checkpoints/last-cifar10-checkpoint.pth')
     del checkpoint  # reduce memory

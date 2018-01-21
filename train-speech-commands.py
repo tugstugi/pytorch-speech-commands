@@ -136,7 +136,7 @@ def train(epoch):
 
     print("epoch %3d with lr=%.02e" % (epoch, get_lr()))
     phase = 'train'
-    writer.add_scalar('%s/learning_rate' % phase,  get_lr(), global_step)
+    writer.add_scalar('%s/learning_rate' % phase,  get_lr(), epoch)
 
     model.train()  # Set model to training mode
 
@@ -183,10 +183,8 @@ def train(epoch):
 
     accuracy = correct/total
     epoch_loss = running_loss / it
-    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, global_step)
-    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, global_step)
-    writer.add_scalar('%s/accuracy_by_epoch' % phase, 100*accuracy, epoch)
-    writer.add_scalar('%s/epoch_loss_by_epoch' % phase, epoch_loss, epoch)
+    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, epoch)
+    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, epoch)
 
 def valid(epoch):
     global best_accuracy, best_loss, global_step
@@ -234,10 +232,8 @@ def valid(epoch):
 
     accuracy = correct/total
     epoch_loss = running_loss / it
-    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, global_step)
-    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, global_step)
-    writer.add_scalar('%s/accuracy_by_epoch' % phase, 100*accuracy, epoch)
-    writer.add_scalar('%s/epoch_loss_by_epoch' % phase, epoch_loss, epoch)
+    writer.add_scalar('%s/accuracy' % phase, 100*accuracy, epoch)
+    writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, epoch)
 
     checkpoint = {
         'epoch': epoch,
