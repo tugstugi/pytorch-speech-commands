@@ -162,6 +162,8 @@ def train(epoch):
     epoch_loss = running_loss / it
     writer.add_scalar('%s/accuracy' % phase, 100*accuracy, global_step)
     writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, global_step)
+    writer.add_scalar('%s/accuracy_by_epoch' % phase, 100*accuracy, epoch)
+    writer.add_scalar('%s/epoch_loss_by_epoch' % phase, epoch_loss, epoch)
 
 def test(epoch):
     global best_accuracy, global_step
@@ -208,6 +210,8 @@ def test(epoch):
     epoch_loss = running_loss / it
     writer.add_scalar('%s/accuracy' % phase, 100*accuracy, global_step)
     writer.add_scalar('%s/epoch_loss' % phase, epoch_loss, global_step)
+    writer.add_scalar('%s/accuracy_by_epoch' % phase, 100*accuracy, epoch)
+    writer.add_scalar('%s/epoch_loss_by_epoch' % phase, epoch_loss, epoch)
 
     checkpoint = {
         'epoch': epoch,
