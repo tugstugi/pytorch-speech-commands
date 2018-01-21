@@ -1,7 +1,7 @@
 __pycache__
 *.pth
-
 runs/
+
 checkpoint/
 train.py
 main.py
