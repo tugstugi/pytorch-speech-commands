@@ -8,6 +8,8 @@ import librosa
 
 from torch.utils.data import Dataset
 
+__all__ = [ 'CLASSES', 'SpeechCommandsDataset', 'BackgroundNoiseDataset' ]
+
 CLASSES = 'unknown, silence, yes, no, up, down, left, right, on, off, stop, go'.split(', ')
 
 class SpeechCommandsDataset(Dataset):

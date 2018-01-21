@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Train a CNN for CIFAR10."""
+"""Train a CNN for Google speech commands."""
 
 __author__ = 'Yuan Xu, Erdene-Ochir Tuguldur'
 
@@ -11,6 +11,7 @@ from tqdm import *
 import torch
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
+from torch.utils.data.sampler import WeightedRandomSampler
 
 import torchvision
 from torchvision.transforms import *
@@ -18,23 +19,28 @@ from torchvision.transforms import *
 from tensorboardX import SummaryWriter
 
 import models
+from speech_commands_dataset import *
+from transforms_wav import *
+from transforms_stft import *
 
 parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("--train-dataset", type=str, default='datasets/speech_commands/train', help='path of train dataset')
+parser.add_argument("--valid-dataset", type=str, default='datasets/speech_commands/valid', help='path of validation dataset')
+parser.add_argument("--background-noise", type=str, default='datasets/speech_commands/train/_background_noise_', help='path of background noise')
 parser.add_argument("--comment", type=str, default='', help='comment in tensorboard title')
-parser.add_argument("--dataset-root", type=str, default='./datasets', help='path of train dataset')
-parser.add_argument("--train-batch-size", type=int, default=128, help='train batch size')
-parser.add_argument("--test-batch-size", type=int, default=100, help='test batch size')
-parser.add_argument("--dataload-workers-nums", type=int, default=2, help='number of workers for dataloader')
-parser.add_argument("--weight-decay", type=float, default=5e-4, help='weight decay')
-parser.add_argument("--optim", choices=['sgd', 'adam'], default='sgd', help='choices of optimization algorithms')
-parser.add_argument("--learning-rate", type=float, default=0.1, help='learning rate for optimization')
+parser.add_argument("--batch-size", type=int, default=128, help='batch size')
+parser.add_argument("--dataload-workers-nums", type=int, default=6, help='number of workers for dataloader')
+parser.add_argument("--weight-decay", type=float, default=1e-2, help='weight decay')
+parser.add_argument("--optim", choices=['sgd', 'adam'], default='adam', help='choices of optimization algorithms')
+parser.add_argument("--learning-rate", type=float, default=1e-4, help='learning rate for optimization')
 parser.add_argument("--lr-scheduler", choices=['plateau', 'step'], default='plateau', help='method to adjust learning rate')
-parser.add_argument("--lr-scheduler-patience", type=int, default=2, help='lr scheduler plateau: Number of epochs with no improvement after which learning rate will be reduced')
+parser.add_argument("--lr-scheduler-patience", type=int, default=5, help='lr scheduler plateau: Number of epochs with no improvement after which learning rate will be reduced')
 parser.add_argument("--lr-scheduler-step-size", type=int, default=50, help='lr scheduler step: number of epochs of learning rate decay.')
 parser.add_argument("--lr-scheduler-gamma", type=float, default=0.1, help='learning rate is multiplied by the gamma to decrease it')
-parser.add_argument("--max-epochs", type=int, default=150, help='max number of epochs')
+parser.add_argument("--max-epochs", type=int, default=70, help='max number of epochs')
 parser.add_argument("--resume", type=str, help='checkpoint file to resume')
 parser.add_argument("--model", choices=['vgg19_bn', 'wideresnet28_10', 'wideresnet28_10D', 'wideresnet52_10'], default='vgg19_bn', help='model of NN')
+parser.add_argument("--input", choices=['mel32'], default='mel32', help='input of NN')
 args = parser.parse_args()
 
 use_gpu = torch.cuda.is_available()
@@ -42,30 +48,40 @@ print('use_gpu', use_gpu)
 if use_gpu:
     torch.backends.cudnn.benchmark = True
 
-to_tensor_and_normalize = Compose([
-    ToTensor(),
-    Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-])
+n_mels = 32
+if args.input == 'mel40':
+    n_mels = 40
 
-train_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=True, download=True,
-            transform=Compose([
-                RandomCrop(32, padding=4),
-                RandomHorizontalFlip(),
-                to_tensor_and_normalize
-            ]))
-train_dataloader = DataLoader(train_dataset, batch_size=args.train_batch_size, shuffle=True, num_workers=args.dataload_workers_nums)
+data_aug_transform = Compose([ChangeAmplitude(), ChangeSpeedAndPitchAudio(), FixAudioLength(), ToSTFT(), StretchAudioOnSTFT(), TimeshiftAudioOnSTFT(), FixSTFTDimension()])
+bg_dataset = BackgroundNoiseDataset(args.background_noise, data_aug_transform)
+add_bg_noise = AddBackgroundNoiseOnSTFT(bg_dataset)
+train_feature_transform = Compose([ToMelSpectrogramFromSTFT(n_mels=n_mels), DeleteSTFT(), ToTensor('mel_spectrogram', 'input')])
+train_dataset = SpeechCommandsDataset(args.train_dataset,
+                                Compose([LoadAudio(),
+                                         data_aug_transform,
+                                         add_bg_noise,
+                                         train_feature_transform]))
 
-test_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=False, download=True, transform=to_tensor_and_normalize)
-test_dataloader = DataLoader(test_dataset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
+valid_feature_transform = Compose([ToMelSpectrogram(n_mels=n_mels), ToTensor('mel_spectrogram', 'input')])
+valid_dataset = SpeechCommandsDataset(args.valid_dataset,
+                                Compose([LoadAudio(),
+                                         FixAudioLength(),
+                                         valid_feature_transform]))
 
-CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+weights = train_dataset.make_weights_for_balanced_classes()
+sampler = WeightedRandomSampler(weights, len(weights))
+train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, sampler=sampler,
+                              pin_memory=use_gpu, num_workers=args.dataload_workers_nums)
+valid_dataloader = DataLoader(valid_dataset, batch_size=args.batch_size, shuffle=False,
+                              pin_memory=use_gpu, num_workers=args.dataload_workers_nums)
+
 
 # a name used to save checkpoints etc.
-full_name = '%s_%s_%s_bs%d_lr%.1e_wd%.1e' % (args.model, args.optim, args.lr_scheduler, args.train_batch_size, args.learning_rate, args.weight_decay)
+full_name = '%s_%s_%s_bs%d_lr%.1e_wd%.1e' % (args.model, args.optim, args.lr_scheduler, args.batch_size, args.learning_rate, args.weight_decay)
 if args.comment:
     full_name = '%s_%s' % (full_name, args.comment)
 
-in_channels = 3
+in_channels = 1
 if args.model == "wideresnet28_10":
     model = models.WideResNet(depth=28, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=in_channels)
 if args.model == "wideresnet28_10D":
@@ -87,6 +103,7 @@ else:
 
 start_epoch = 0
 best_accuracy = 0
+best_loss = 1e100
 global_step = 0
 
 if args.resume:
@@ -97,7 +114,7 @@ if args.resume:
     optimizer.load_state_dict(checkpoint['optimizer'])
 
     best_accuracy = checkpoint.get('accuracy', best_accuracy)
-    #best_loss = checkpoint.get('loss', best_loss)
+    best_loss = checkpoint.get('loss', best_loss)
     start_epoch = checkpoint.get('epoch', start_epoch)
     global_step = checkpoint.get('step', global_step)
 
@@ -111,7 +128,7 @@ else:
 def get_lr():
     return optimizer.param_groups[0]['lr']
 
-writer = SummaryWriter(comment=('_cifar10_' + full_name))
+writer = SummaryWriter(comment=('_speech_commands_' + full_name))
 
 def train(epoch):
     global global_step
@@ -127,9 +144,12 @@ def train(epoch):
     correct = 0
     total = 0
 
-    pbar = tqdm(train_dataloader, unit="images", unit_scale=train_dataloader.batch_size)
+    pbar = tqdm(train_dataloader, unit="audios", unit_scale=train_dataloader.batch_size)
     for batch in pbar:
-        inputs, targets = batch
+        inputs = batch['input']
+        inputs = torch.unsqueeze(inputs, 1)
+        targets = batch['target']
+
         inputs = Variable(inputs, requires_grad=True)
         targets = Variable(targets, requires_grad=False)
 
@@ -167,10 +187,10 @@ def train(epoch):
     writer.add_scalar('%s/accuracy_by_epoch' % phase, 100*accuracy, epoch)
     writer.add_scalar('%s/epoch_loss_by_epoch' % phase, epoch_loss, epoch)
 
-def test(epoch):
-    global best_accuracy, global_step
+def valid(epoch):
+    global best_accuracy, best_loss, global_step
 
-    phase = 'test'
+    phase = 'valid'
     model.eval()  # Set model to evaluate mode
 
     running_loss = 0.0
@@ -178,9 +198,12 @@ def test(epoch):
     correct = 0
     total = 0
 
-    pbar = tqdm(test_dataloader, unit="images", unit_scale=test_dataloader.batch_size)
+    pbar = tqdm(valid_dataloader, unit="audios", unit_scale=valid_dataloader.batch_size)
     for batch in pbar:
-        inputs, targets = batch
+        inputs = batch['input']
+        inputs = torch.unsqueeze(inputs, 1)
+        targets = batch['target']
+
         inputs = Variable(inputs, volatile = True)
         targets = Variable(targets, requires_grad=False)
 
@@ -219,34 +242,38 @@ def test(epoch):
         'epoch': epoch,
         'step': global_step,
         'state_dict': model.state_dict(),
-        #'loss': epoch_loss,
+        'loss': epoch_loss,
         'accuracy': accuracy,
         'optimizer' : optimizer.state_dict(),
     }
 
     if accuracy > best_accuracy:
         best_accuracy = accuracy
-        torch.save(checkpoint, 'checkpoints/best-cifar10-checkpoint-%s.pth' % full_name)
-        torch.save(model, 'best-cifar10-model-%s.pth' % full_name)
+        torch.save(checkpoint, 'checkpoints/best-accuracy-speech-commands-checkpoint-%s.pth' % full_name)
+        torch.save(model, 'best-accuracy-speech-commands-model-%s.pth' % full_name)
+    if epoch_loss < best_loss:
+        best_loss = epoch_loss
+        torch.save(checkpoint, 'checkpoints/best-loss-speech-commands-checkpoint-%s.pth' % full_name)
+        torch.save(model, 'best-loss-speech-commands-model-%s.pth' % full_name)
 
-    torch.save(checkpoint, 'checkpoints/last-cifar10-checkpoint.pth')
+    torch.save(checkpoint, 'checkpoints/last-speech-commands-checkpoint.pth')
     del checkpoint  # reduce memory
 
     return epoch_loss
 
-print("training %s for CIFAR10..." % args.model)
+print("training %s for Google speech commands..." % args.model)
 since = time.time()
 for epoch in range(start_epoch, args.max_epochs):
     if args.lr_scheduler == 'step':
         lr_scheduler.step()
 
     train(epoch)
-    epoch_loss = test(epoch)
+    epoch_loss = valid(epoch)
 
     if args.lr_scheduler == 'plateau':
         lr_scheduler.step(metrics=epoch_loss)
 
     time_elapsed = time.time() - since
     time_str = 'total time elapsed: {:.0f}h {:.0f}m {:.0f}s '.format(time_elapsed // 3600, time_elapsed % 3600 // 60, time_elapsed % 60)
-    print("%s, best test accuracy: %.02f%%" % (time_str, 100*best_accuracy))
+    print("%s, best accuracy: %.02f%%, best loss %f" % (time_str, 100*best_accuracy, best_loss))
 print("finished")
