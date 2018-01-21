@@ -21,8 +21,8 @@ class SpeechCommandsDataset(Dataset):
 
     def __init__(self, folder, transform=None, classes=CLASSES, silence_percentage=0.1):
         all_classes = [d for d in os.listdir(folder) if os.path.isdir(os.path.join(folder, d)) and not d.startswith('_')]
-        for c in classes[2:]:
-            assert c in all_classes
+        #for c in classes[2:]:
+        #    assert c in all_classes
 
         class_to_idx = {classes[i]: i for i in range(len(classes))}
         for c in all_classes:
