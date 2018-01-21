@@ -156,7 +156,7 @@ def test(epoch):
     correct = 0
     total = 0
 
-    pbar = tqdm(trainloader, unit="images", unit_scale=testloader.batch_size)
+    pbar = tqdm(testloader, unit="images", unit_scale=testloader.batch_size)
     for batch in pbar:
         inputs, targets = batch
         inputs = Variable(inputs, volatile = True)
