@@ -106,7 +106,7 @@ def get_lr():
     return optimizer.param_groups[0]['lr']
 
 def train(epoch):
-    print("epoch %3d with lr=%f" % (epoch, get_lr()))
+    print("epoch %3d with lr=%.02e" % (epoch, get_lr()))
     model.train()  # Set model to training mode
 
     running_loss = 0.0
@@ -122,7 +122,7 @@ def train(epoch):
 
         if use_gpu:
             inputs = inputs.cuda()
-            targets = targets.cuda(async=True)
+            targets = targets.cuda()
 
         # forward/backward
         outputs = model(inputs)
@@ -164,7 +164,7 @@ def test(epoch):
 
         if use_gpu:
             inputs = inputs.cuda()
-            targets = targets.cuda(async=True)
+            targets = targets.cuda()
 
         # forward
         outputs = model(inputs)
