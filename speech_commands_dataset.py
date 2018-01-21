@@ -71,7 +71,7 @@ class SpeechCommandsDataset(Dataset):
         return weight
 
 class BackgroundNoiseDataset(Dataset):
-    """Dataset for silenes / background noise."""
+    """Dataset for silence / background noise."""
 
     def __init__(self, folder, transform=None, sample_rate=16000, sample_length=1):
         audio_files = [d for d in os.listdir(folder) if os.path.isfile(os.path.join(folder, d)) and d.endswith('.wav')]
