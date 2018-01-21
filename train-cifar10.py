@@ -64,14 +64,15 @@ full_name = '%s_%s_%s_bs%d_lr%.1e_wd%.1e' % (args.model, args.optim, args.lr_sch
 if args.comment:
     full_name = '%s_%s' % (full_name, args.comment)
 
+in_channels = 3
 if args.model == "wideresnet28_10":
-    model = models.WideResNet(depth=28, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=1)
+    model = models.WideResNet(depth=28, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=in_channels)
 if args.model == "wideresnet28_10D":
-    model = models.WideResNet(depth=28, widen_factor=10, dropRate=0.3, num_classes=len(CLASSES), in_channels=1)
+    model = models.WideResNet(depth=28, widen_factor=10, dropRate=0.3, num_classes=len(CLASSES), in_channels=in_channels)
 if args.model == "wideresnet52_10":
-    model = models.WideResNet(depth=52, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=1)
+    model = models.WideResNet(depth=52, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=in_channels)
 else:
-    model = models.vgg19_bn(num_classes=len(CLASSES), in_channels=3)
+    model = models.vgg19_bn(num_classes=len(CLASSES), in_channels=in_channels)
 
 if use_gpu:
     model = torch.nn.DataParallel(model).cuda()
