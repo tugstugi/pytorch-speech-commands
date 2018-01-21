@@ -31,7 +31,7 @@ parser.add_argument("--comment", type=str, default='', help='comment in tensorbo
 parser.add_argument("--batch-size", type=int, default=128, help='batch size')
 parser.add_argument("--dataload-workers-nums", type=int, default=6, help='number of workers for dataloader')
 parser.add_argument("--weight-decay", type=float, default=1e-2, help='weight decay')
-parser.add_argument("--optim", choices=['sgd', 'adam'], default='adam', help='choices of optimization algorithms')
+parser.add_argument("--optim", choices=['sgd', 'adam'], default='sgd', help='choices of optimization algorithms')
 parser.add_argument("--learning-rate", type=float, default=1e-4, help='learning rate for optimization')
 parser.add_argument("--lr-scheduler", choices=['plateau', 'step'], default='plateau', help='method to adjust learning rate')
 parser.add_argument("--lr-scheduler-patience", type=int, default=5, help='lr scheduler plateau: Number of epochs with no improvement after which learning rate will be reduced')

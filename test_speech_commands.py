@@ -5,6 +5,8 @@ __author__ = 'Yuan Xu, Erdene-Ochir Tuguldur'
 
 import argparse
 import time
+import csv
+import os
 
 from tqdm import *
 
@@ -125,3 +127,9 @@ print("testing...")
 probabilities, predictions = test()
 if args.generate_kaggle_submission:
     print("generating kaggle submission file '%s'..." % args.output)
+    with open(args.output, 'w') as outfile:
+        fieldnames = ['fname', 'label']
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for fname, pred in predictions.items():
+            writer.writerow({'fname': os.path.basename(fname), 'label': test_dataset.classes[pred]})

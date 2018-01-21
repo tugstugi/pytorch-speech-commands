@@ -1,9 +1,5 @@
 __pycache__
 *.pth
+*.csv
 pretrained/
 runs/
-
-checkpoint/
-train.py
-main.py
-utils.py
