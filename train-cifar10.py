@@ -133,7 +133,7 @@ def train(epoch):
 
         if use_gpu:
             inputs = inputs.cuda()
-            targets = targets.cuda()
+            targets = targets.cuda(async=True)
 
         # forward/backward
         outputs = model(inputs)
@@ -182,7 +182,7 @@ def test(epoch):
 
         if use_gpu:
             inputs = inputs.cuda()
-            targets = targets.cuda()
+            targets = targets.cuda(async=True)
 
         # forward
         outputs = model(inputs)

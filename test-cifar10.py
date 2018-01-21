@@ -63,7 +63,7 @@ def test():
 
         if use_gpu:
             inputs = inputs.cuda()
-            targets = targets.cuda()
+            targets = targets.cuda(async=True)
 
         # forward
         outputs = model(inputs)
