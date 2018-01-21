@@ -56,20 +56,15 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=args.test_batch_siz
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
-start_epoch = 0
-best_accuracy = 0
 
-if args.resume:
-    pass
+if args.model == "wideresnet28_10":
+    model = models.WideResNet(depth=28, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=1)
+if args.model == "wideresnet28_10D":
+    model = models.WideResNet(depth=28, widen_factor=10, dropRate=0.3, num_classes=len(CLASSES), in_channels=1)
+if args.model == "wideresnet52_10":
+    model = models.WideResNet(depth=52, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=1)
 else:
-    if args.model == "wideresnet28_10":
-        model = models.WideResNet(depth=28, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=1)
-    if args.model == "wideresnet28_10D":
-        model = models.WideResNet(depth=28, widen_factor=10, dropRate=0.3, num_classes=len(CLASSES), in_channels=1)
-    if args.model == "wideresnet52_10":
-        model = models.WideResNet(depth=52, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=1)
-    else:
-        model = models.vgg19_bn(num_classes=len(CLASSES), in_channels=3)
+    model = models.vgg19_bn(num_classes=len(CLASSES), in_channels=3)
 
 if use_gpu:
     model = torch.nn.DataParallel(model).cuda()
@@ -81,6 +76,22 @@ if args.optim == 'sgd':
 else:
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)
 
+start_epoch = 0
+best_accuracy = 0
+
+if args.resume:
+    print("resuming a checkpoint '%s'" % args.resume)
+    checkpoint = torch.load(args.resume)
+    model.load_state_dict(checkpoint['state_dict'])
+    model.float()
+    optimizer.load_state_dict(checkpoint['optimizer'])
+
+    best_accuracy = checkpoint.get('accuracy', best_accuracy)
+    #best_loss = checkpoint.get('loss', best_loss)
+    start_epoch = checkpoint.get('epoch', start_epoch)
+
+    del checkpoint  # reduce memory
+
 if args.lr_scheduler == 'plateau':
     lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=args.lr_scheduler_patience, factor=args.lr_scheduler_gamma)
 else:
@@ -90,7 +101,7 @@ def get_lr():
     return optimizer.param_groups[0]['lr']
 
 def train(epoch):
-    print("Epoch %3d with lr=%f" % (epoch, get_lr()))
+    print("epoch %3d with lr=%f" % (epoch, get_lr()))
     model.train()  # Set model to training mode
 
     running_loss = 0.0
@@ -170,12 +181,25 @@ def test(epoch):
     accuracy = correct/total
     epoch_loss = running_loss / it
 
+    checkpoint = {
+        'epoch': epoch,
+        'state_dict': model.state_dict(),
+        #'loss': epoch_loss,
+        'accuracy': accuracy,
+        'optimizer' : optimizer.state_dict(),
+    }
+
     if accuracy > best_accuracy:
         best_accuracy = accuracy
-        #print("Best accuracy %.02f%% with epoch loss %.05f, saving model..." % (100*accuracy, epoch_loss))
+        torch.save(checkpoint, 'best-checkpoint.pth')
+        torch.save(model, 'best_model.pth')
+
+    torch.save(checkpoint, 'checkpoint.pth')
+    del checkpoint  # reduce memory
 
     return epoch_loss
 
+print("training...")
 since = time.time()
 for epoch in range(start_epoch, args.max_epochs):
     if args.lr_scheduler == 'step':
@@ -190,3 +214,4 @@ for epoch in range(start_epoch, args.max_epochs):
     time_elapsed = time.time() - since
     time_str = 'total time elapsed: {:.0f}h {:.0f}m {:.0f}s '.format(time_elapsed // 3600, time_elapsed % 3600 // 60, time_elapsed % 60)
     print("%s, best test accuracy: %.02f%%" % (time_str, 100*best_accuracy))
+print("finished")
