@@ -46,16 +46,16 @@ to_tensor_and_normalize = Compose([
     Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
 ])
 
-trainset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=True, download=True,
+train_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=True, download=True,
             transform=Compose([
                 RandomCrop(32, padding=4),
                 RandomHorizontalFlip(),
                 to_tensor_and_normalize
             ]))
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=args.train_batch_size, shuffle=True, num_workers=args.dataload_workers_nums)
+train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=args.train_batch_size, shuffle=True, num_workers=args.dataload_workers_nums)
 
-testset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=False, download=True, transform=to_tensor_and_normalize)
-testloader = torch.utils.data.DataLoader(testset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
+test_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=False, download=True, transform=to_tensor_and_normalize)
+test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
@@ -125,7 +125,7 @@ def train(epoch):
     correct = 0
     total = 0
 
-    pbar = tqdm(trainloader, unit="images", unit_scale=trainloader.batch_size)
+    pbar = tqdm(train_dataloader, unit="images", unit_scale=train_dataloader.batch_size)
     for batch in pbar:
         inputs, targets = batch
         inputs = Variable(inputs, requires_grad=True)
@@ -174,7 +174,7 @@ def test(epoch):
     correct = 0
     total = 0
 
-    pbar = tqdm(testloader, unit="images", unit_scale=testloader.batch_size)
+    pbar = tqdm(test_dataloader, unit="images", unit_scale=test_dataloader.batch_size)
     for batch in pbar:
         inputs, targets = batch
         inputs = Variable(inputs, volatile = True)

@@ -39,8 +39,8 @@ to_tensor_and_normalize = Compose([
     Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
 ])
 
-testset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=False, download=True, transform=to_tensor_and_normalize)
-testloader = torch.utils.data.DataLoader(testset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
+test_dataset = torchvision.datasets.CIFAR10(root=args.dataset_root, train=False, download=True, transform=to_tensor_and_normalize)
+test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=args.test_batch_size, shuffle=False, num_workers=args.dataload_workers_nums)
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
@@ -55,7 +55,7 @@ def test():
     total = 0
     confusion_matrix = torchnet.meter.ConfusionMeter(len(CLASSES))
 
-    pbar = tqdm(testloader, unit="images", unit_scale=testloader.batch_size)
+    pbar = tqdm(test_dataloader, unit="images", unit_scale=test_dataloader.batch_size)
     for batch in pbar:
         inputs, targets = batch
         inputs = Variable(inputs, volatile = True)
