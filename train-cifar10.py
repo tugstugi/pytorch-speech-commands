@@ -17,6 +17,7 @@ from torchvision.transforms import *
 import models
 
 parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("--comment", type=str, default='', help='comment in tensorboard title')
 parser.add_argument("--dataset-root", type=str, default='./datasets', help='path of train dataset')
 parser.add_argument("--train-batch-size", type=int, default=128, help='train batch size')
 parser.add_argument("--test-batch-size", type=int, default=100, help='test batch size')
@@ -56,6 +57,10 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=args.test_batch_siz
 
 CLASSES = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
+# a name used to save checkpoints etc.
+full_name = '%s_%s_%s_bs%d_lr%.1e_wd%.1e' % (args.model, args.optim, args.lr_scheduler, args.train_batch_size, args.learning_rate, args.weight_decay)
+if args.comment:
+    full_name = '%s_%s' % (full_name, args.comment)
 
 if args.model == "wideresnet28_10":
     model = models.WideResNet(depth=28, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=1)
@@ -191,8 +196,8 @@ def test(epoch):
 
     if accuracy > best_accuracy:
         best_accuracy = accuracy
-        torch.save(checkpoint, 'best-checkpoint.pth')
-        torch.save(model, 'best_model.pth')
+        torch.save(checkpoint, 'best-checkpoint-%s.pth' % full_name)
+        torch.save(model, 'best-model-%s.pth' % full_name)
 
     torch.save(checkpoint, 'checkpoint.pth')
     del checkpoint  # reduce memory
