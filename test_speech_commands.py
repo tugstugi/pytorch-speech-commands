@@ -28,10 +28,15 @@ parser.add_argument("--dataload-workers-nums", type=int, default=3, help='number
 parser.add_argument("--input", choices=['mel32'], default='mel32', help='input of NN')
 parser.add_argument('--multi-crop', action='store_true', help='apply crop and average the results')
 parser.add_argument('--generate-kaggle-submission', action='store_true', help='generate kaggle submission file')
-parser.add_argument('--output', type=str, help='save output to file for the kaggle competition', default='kaggle_submission.csv')
+parser.add_argument("--kaggle-dataset-dir", type=str, default='datasets/speech_commands/kaggle', help='path of kaggle test dataset')
+parser.add_argument('--output', type=str, default='', help='save output to file for the kaggle competition, if empty the model name will be used')
 #parser.add_argument('--prob-output', type=str, help='save probabilities to file', default='probabilities.json')
 parser.add_argument("model", help='a pretrained neural network model')
 args = parser.parse_args()
+
+dataset_dir = args.dataset_dir
+if args.generate_kaggle_submission:
+    dataset_dir = args.kaggle_dataset_dir
 
 print("loading model...")
 model = torch.load(args.model)
@@ -49,7 +54,7 @@ if args.input == 'mel40':
 
 feature_transform = Compose([ToMelSpectrogram(n_mels=n_mels), ToTensor('mel_spectrogram', 'input')])
 transform = Compose([LoadAudio(), FixAudioLength(), feature_transform])
-test_dataset = SpeechCommandsDataset(args.dataset_dir, transform, silence_percentage=0)
+test_dataset = SpeechCommandsDataset(dataset_dir, transform, silence_percentage=0)
 test_dataloader = DataLoader(test_dataset, batch_size=args.batch_size, sampler=None,
                             pin_memory=use_gpu, num_workers=args.dataload_workers_nums)
 
@@ -127,7 +132,13 @@ print("testing...")
 probabilities, predictions = test()
 if args.generate_kaggle_submission:
     print("generating kaggle submission file '%s'..." % args.output)
-    with open(args.output, 'w') as outfile:
+    output_file_name = "%s" % os.path.splitext(os.path.basename(args.model))[0]
+    if args.multi_crop:
+        output_file_name = "%s-crop" % output_file_name
+    output_file_name = "%s.csv" % output_file_name
+    if args.output:
+        output_file_name = args.output
+    with open(output_file_name, 'w') as outfile:
         fieldnames = ['fname', 'label']
         writer = csv.DictWriter(outfile, fieldnames=fieldnames)
         writer.writeheader()
