@@ -6,7 +6,7 @@ URL=http://download.tensorflow.org/data/$FILE_NAME
 DATASET_FOLDER=datasets/speech_commands
 
 echo "downloading $URL...\n"
-#wget -O datasets/$FILE_NAME $URL
+wget -O datasets/$FILE_NAME $URL
 
 echo "extracting $FILE_NAME..."
 TEMP_DIRECTORY=$DATASET_FOLDER/audio

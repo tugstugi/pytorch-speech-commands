@@ -246,12 +246,12 @@ def valid(epoch):
 
     if accuracy > best_accuracy:
         best_accuracy = accuracy
-        torch.save(checkpoint, 'checkpoints/best-accuracy-speech-commands-checkpoint-%s.pth' % full_name)
-        torch.save(model, '%d-best-accuracy-speech-commands-model-%s.pth' % (start_timestamp, full_name))
+        #torch.save(checkpoint, 'checkpoints/best-accuracy-speech-commands-checkpoint-%s.pth' % full_name)
+        #torch.save(model, '%d-best-accuracy-speech-commands-model-%s.pth' % (start_timestamp, full_name))
     if epoch_loss < best_loss:
         best_loss = epoch_loss
-        torch.save(checkpoint, 'checkpoints/best-loss-speech-commands-checkpoint-%s.pth' % full_name)
-        torch.save(model, '%d-best-loss-speech-commands-model-%s.pth' % (start_timestamp, full_name))
+        torch.save(checkpoint, 'checkpoints/best-speech-commands-checkpoint-%s.pth' % full_name)
+        torch.save(model, '%d-best-speech-commands-model-%s.pth' % (start_timestamp, full_name))
 
     torch.save(checkpoint, 'checkpoints/last-speech-commands-checkpoint.pth')
     del checkpoint  # reduce memory
