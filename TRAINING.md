@@ -8,9 +8,9 @@ Earlier stopping the train process will sometimes produce a better score in Kagg
 All reported Kaggle scores are the private leader board scores.
 
 #### VGG19 BN
-* 
+* accuracy: 97.351865% (97.190929% with crop), Kaggle private LB score: 0.86690 (0.87055 with crop)
 ```sh
-python train_speech_commands.py --model=vgg19_bn --optim=adam --learning-rate=0.0001 --lr-scheduler=plateau --lr-scheduler-patience=2 --max-epochs=30
+python train_speech_commands.py --model=vgg19_bn --optim=sgd --learning-rate=0.001 --lr-scheduler=plateau --lr-scheduler-patience=5 --max-epochs=90
 ```
 
 ### Training only for test set
@@ -18,7 +18,7 @@ python train_speech_commands.py --model=vgg19_bn --optim=adam --learning-rate=0.
 Here, we have tried to maximize the accuracy of the test set containing only 6835 audios.
 
 #### VGG19 BN
-* accuracy: 97.351865%, accuracy with crop: 97.190929% (very bad Kaggle score)
+* accuracy: 97.351865%, accuracy with crop: 97.190929%
 ```sh
 python train_speech_commands.py --model=vgg19_bn --optim=sgd --learning-rate=0.001 --lr-scheduler=plateau --lr-scheduler-patience=5 --max-epochs=90
 ```
