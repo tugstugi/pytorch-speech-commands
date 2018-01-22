@@ -130,13 +130,13 @@ def test():
 print("testing...")
 probabilities, predictions = test()
 if args.generate_kaggle_submission:
-    print("generating kaggle submission file '%s'..." % args.output)
     output_file_name = "%s" % os.path.splitext(os.path.basename(args.model))[0]
     if args.multi_crop:
         output_file_name = "%s-crop" % output_file_name
     output_file_name = "%s.csv" % output_file_name
     if args.output:
         output_file_name = args.output
+    print("generating kaggle submission file '%s'..." % output_file_name)
     with open(output_file_name, 'w') as outfile:
         fieldnames = ['fname', 'label']
         writer = csv.DictWriter(outfile, fieldnames=fieldnames)
