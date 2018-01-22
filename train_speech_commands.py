@@ -39,7 +39,7 @@ parser.add_argument("--lr-scheduler-step-size", type=int, default=50, help='lr s
 parser.add_argument("--lr-scheduler-gamma", type=float, default=0.1, help='learning rate is multiplied by the gamma to decrease it')
 parser.add_argument("--max-epochs", type=int, default=70, help='max number of epochs')
 parser.add_argument("--resume", type=str, help='checkpoint file to resume')
-parser.add_argument("--model", choices=['vgg19_bn', 'wideresnet28_10', 'wideresnet28_10D', 'wideresnet52_10'], default='vgg19_bn', help='model of NN')
+parser.add_argument("--model", choices=['vgg19_bn', 'wideresnet28_10', 'wideresnet28_10D', 'wideresnet52_10', 'dpn92', 'densenet_100_12', 'densenet_bc_190_40'], default='vgg19_bn', help='model of NN')
 parser.add_argument("--input", choices=['mel32'], default='mel32', help='input of NN')
 args = parser.parse_args()
 
@@ -88,6 +88,12 @@ if args.model == "wideresnet28_10D":
     model = models.WideResNet(depth=28, widen_factor=10, dropRate=0.3, num_classes=len(CLASSES), in_channels=in_channels)
 if args.model == "wideresnet52_10":
     model = models.WideResNet(depth=52, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=in_channels)
+if args.model == "dpn92":
+    model = models.DPN92(num_classes=len(CLASSES), in_channels=in_channels)
+if args.model == "densenet_100_12":
+    model = models.DenseNet(depth=190, growthRate=40, compressionRate=2, num_classes=len(CLASSES), in_channels=in_channels)
+if args.model == "densenet_bc_190_40":
+    model = models.DenseNet(depth=190, growthRate=40, compressionRate=2, num_classes=len(CLASSES), in_channels=in_channels)
 else:
     model = models.vgg19_bn(num_classes=len(CLASSES), in_channels=in_channels)
 
