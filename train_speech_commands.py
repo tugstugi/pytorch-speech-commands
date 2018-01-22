@@ -19,9 +19,8 @@ from torchvision.transforms import *
 from tensorboardX import SummaryWriter
 
 import models
-from speech_commands_dataset import *
-from transforms_wav import *
-from transforms_stft import *
+from datasets import *
+from transforms import *
 
 parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--train-dataset", type=str, default='datasets/speech_commands/train', help='path of train dataset')

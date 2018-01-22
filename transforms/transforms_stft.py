@@ -9,7 +9,7 @@ import librosa
 
 from torch.utils.data import Dataset
 
-from transforms_wav import should_apply_transform
+from .transforms_wav import should_apply_transform
 
 class ToSTFT(object):
     """Applies on an audio the short time fourier transform."""

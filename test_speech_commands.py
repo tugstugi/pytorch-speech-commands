@@ -17,9 +17,8 @@ from torch.utils.data import DataLoader
 from torchvision.transforms import *
 import torchnet
 
-from speech_commands_dataset import *
-from transforms_wav import *
-from transforms_stft import *
+from datasets import *
+from transforms import *
 
 parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--dataset-dir", type=str, default='datasets/speech_commands/test', help='path of test dataset')
