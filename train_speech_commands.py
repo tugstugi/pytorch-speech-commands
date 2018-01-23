@@ -83,15 +83,15 @@ if args.comment:
 in_channels = 1
 if args.model == "wideresnet28_10":
     model = models.WideResNet(depth=28, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=in_channels)
-if args.model == "wideresnet28_10D":
+elif args.model == "wideresnet28_10D":
     model = models.WideResNet(depth=28, widen_factor=10, dropRate=0.3, num_classes=len(CLASSES), in_channels=in_channels)
-if args.model == "wideresnet52_10":
+elif args.model == "wideresnet52_10":
     model = models.WideResNet(depth=52, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=in_channels)
-if args.model == "dpn92":
+elif args.model == "dpn92":
     model = models.DPN92(num_classes=len(CLASSES), in_channels=in_channels)
-if args.model == "densenet_100_12":
+elif args.model == "densenet_100_12":
     model = models.DenseNet(depth=190, growthRate=40, compressionRate=2, num_classes=len(CLASSES), in_channels=in_channels)
-if args.model == "densenet_bc_190_40":
+elif args.model == "densenet_bc_190_40":
     model = models.DenseNet(depth=190, growthRate=40, compressionRate=2, num_classes=len(CLASSES), in_channels=in_channels)
 else:
     model = models.vgg19_bn(num_classes=len(CLASSES), in_channels=in_channels)
