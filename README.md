@@ -14,7 +14,7 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 
 # Results
 Due to time limit of the competition, we have trained most of the nets with `sgd` using `ReduceLROnPlateau` for 70 epochs.
-For the training parameters, see [TRAINING.md](TRAINING.md).
+For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping the train process will sometimes produce a better score in Kaggle.
 
 <table><tbody>
 <th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
@@ -69,7 +69,28 @@ For the training parameters, see [TRAINING.md](TRAINING.md).
 
 # Results with Mixup
 
-Some of the networks were retrained using [mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412) by Hongyi Zhang, Moustapha Cisse, Yann N. Dauphin and David Lopez-Paz.
+After the competition, Some of the networks were retrained using [mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412) by Hongyi Zhang, Moustapha Cisse, Yann N. Dauphin and David Lopez-Paz.
+
+<table><tbody>
+<th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
+<th valign="bottom"><sup><sub>CIFAR-10<br/>test set<br/>accuracy</sub></sup></th>
+<th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy</sub></sup></th>
+<th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy with crop</sub></sup></th>
+<th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score</sub></sup></th>
+<th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score with crop</sub></sup></th>
+<th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Remarks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
+
+<tr>
+<td align="left"><sup><sub>WRN-52-10</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>97.454279%</sub></sup></td>
+<td align="center"><sup><sub>97.498171%</sub></sup></td>
+<td align="center"><sup><sub>0.90273</sub></sup></td>
+<td align="center"><sup><sub><b>0.90355</b></sub></sup></td>
+<td align="left"><sup><sub>same score as the 16-th place in Kaggle</sub></sup></td>
+</tr>
+
+</tbody></table>
 
 
 <b>TODO</b>
