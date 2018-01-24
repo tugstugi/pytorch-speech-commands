@@ -72,4 +72,4 @@ For the training parameters, see [TRAINING.md](TRAINING.md).
 Some of the networks were retrained using [mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412) by Hongyi Zhang, Moustapha Cisse, Yann N. Dauphin and David Lopez-Paz.
 
 
-TODO
+<b>TODO</b>

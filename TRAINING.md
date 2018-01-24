@@ -1,12 +1,5 @@
 ## Google Speech Commands
 
-### Training for Kaggle
-
-Due to time limit of the competition, we have trained the smaller nets with `adam`
-and the bigger nets with `sgd` both using `ReduceLROnPlateau`.
-Earlier stopping the train process will sometimes produce a better score in Kaggle.
-All reported Kaggle scores are the private leader board scores.
-
 #### VGG19 BN
 * accuracy: 97.337235%, 97.527432% with crop, Kaggle private LB score: 0.87454 and 0.88030 with crop, epoch time: 1m25s
 ```sh
