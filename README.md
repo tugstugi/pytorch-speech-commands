@@ -18,9 +18,10 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 <th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
 <th valign="bottom"><sup><sub>CIFAR-10<br/>test set<br/>accuracy</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy</sub></sup></th>
-<th valign="bottom"><sup><sub>Speech Commands/<br/>test set<br/>accuracy<br/>with crop</sub></sup></th>
-<th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle<br/>private LB score</sub></sup></th>
-<th valign="bottom"><sup><sub>Speech Commands/<br/>Kaggle<br/>private LB score<br/>with crop</sub></sup></th>
+<th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy with crop</sub></sup></th>
+<th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score</sub></sup></th>
+<th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score with crop</sub></sup></th>
+<th valign="bottom"><sup><sub>Remarks</sub></sup></th>
 <tr>
 <td align="left"><sup><sub>VGG19 BN</sub></sup></td>
 <td align="left"><sup><sub>93.56%</sub></sup></td>
