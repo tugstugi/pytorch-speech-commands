@@ -22,14 +22,47 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 <th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score with crop</sub></sup></th>
 <th valign="bottom"><sup><sub>Remarks</sub></sup></th>
+
 <tr>
 <td align="left"><sup><sub>VGG19 BN</sub></sup></td>
-<td align="left"><sup><sub>93.56%</sub></sup></td>
-<td align="left"><sup><sub>97.337235%</sub></sup></td>
-<td align="left"><sup><sub>97.527432%</sub></sup></td>
-<td align="left"><sup><sub>0.87454</sub></sup></td>
-<td align="left"><sup><sub>0.88030</sub></sup></td>
+<td align="center"><sup><sub>93.56%</sub></sup></td>
+<td align="center"><sup><sub>97.337235%</sub></sup></td>
+<td align="center"><sup><sub>97.527432%</sub></sup></td>
+<td align="center"><sup><sub>0.87454</sub></sup></td>
+<td align="center"><sup><sub>0.88030</sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
 </tr>
+
+<tr>
+<td align="left"><sup><sub>WRN-28-10-dropout</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>97.702999%</sub></sup></td>
+<td align="center"><sup><sub>97.717630%</sub></sup></td>
+<td align="center"><sup><sub>0.89580</sub></sup></td>
+<td align="center"><sup><sub>0.89568</sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
+</tr>
+
+<tr>
+<td align="left"><sup><sub>WRN-52-10</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>98.039503%</sub></sup></td>
+<td align="center"><sup><sub>97.980980%</sub></sup></td>
+<td align="center"><sup><sub>0.88159</sub></sup></td>
+<td align="center"><sup><sub>0.88323</sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
+</tr>
+
+<tr>
+<td align="left"><sup><sub>DenseNet-BC (L=190, k=40)</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>97.117776%</sub></sup></td>
+<td align="center"><sup><sub>97.147037%</sub></sup></td>
+<td align="center"><sup><sub>0.89369</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
+</tr>
+
 </tbody></table>
 
 # Results with Mixup
