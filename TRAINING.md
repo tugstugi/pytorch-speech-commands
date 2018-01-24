@@ -25,6 +25,12 @@ python train_speech_commands.py --model=wideresnet28_10D --optim=sgd --lr-schedu
 python train_speech_commands.py --model=wideresnet52_10 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
 ```
 
+#### DenseNet-BC (L=190, k=40)
+* accuracy: 97.117776%, 97.147037% with crop,  Kaggle private LB score: 0.89369 and 0.89521 with crop, epoch time: 20m
+```sh
+python train_speech_commands.py --model=wideresnet52_10 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=64
+```
+
 ## CIFAR10
 
 #### VGG19 BN

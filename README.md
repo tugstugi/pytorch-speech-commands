@@ -13,6 +13,8 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 * Kaggle private LB scores evaluated on 150.000+ audio files
 
 # Results
+Due to time limit of the competition, we have trained most of the nets with `sgd` using `ReduceLROnPlateau` for 70 epochs.
+For the training parameters, see [TRAINING.md](TRAINING.md).
 
 <table><tbody>
 <th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
@@ -21,7 +23,7 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 <th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy with crop</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score with crop</sub></sup></th>
-<th valign="bottom"><sup><sub>Remarks</sub></sup></th>
+<th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Remarks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
 
 <tr>
 <td align="left"><sup><sub>VGG19 BN</sub></sup></td>
@@ -50,7 +52,7 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 <td align="center"><sup><sub>97.980980%</sub></sup></td>
 <td align="center"><sup><sub>0.88159</sub></sup></td>
 <td align="center"><sup><sub>0.88323</sub></sup></td>
-<td align="left"><sup><sub></sub></sup></td>
+<td align="left"><sup><sub>Another model has 97.52%/<b>0.89322</b></sub></sup></td>
 </tr>
 
 <tr>
@@ -59,7 +61,7 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 <td align="center"><sup><sub>97.117776%</sub></sup></td>
 <td align="center"><sup><sub>97.147037%</sub></sup></td>
 <td align="center"><sup><sub>0.89369</sub></sup></td>
-<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>0.89521</sub></sup></td>
 <td align="left"><sup><sub></sub></sup></td>
 </tr>
 
@@ -68,3 +70,6 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 # Results with Mixup
 
 Some of the networks were retrained using [mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412) by Hongyi Zhang, Moustapha Cisse, Yann N. Dauphin and David Lopez-Paz.
+
+
+TODO
