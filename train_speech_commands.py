@@ -87,6 +87,8 @@ elif args.model == "wideresnet28_10D":
     model = models.WideResNet(depth=28, widen_factor=10, dropRate=0.3, num_classes=len(CLASSES), in_channels=in_channels)
 elif args.model == "wideresnet52_10":
     model = models.WideResNet(depth=52, widen_factor=10, dropRate=0, num_classes=len(CLASSES), in_channels=in_channels)
+elif args.model == "resnext29_8_64":
+    model = models.CifarResNeXt(nlabels=len(CLASSES), in_channels=in_channels)
 elif args.model == "dpn92":
     model = models.DPN92(num_classes=len(CLASSES), in_channels=in_channels)
 elif args.model == "densenet_100_12":

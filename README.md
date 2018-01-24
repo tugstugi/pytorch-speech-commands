@@ -52,7 +52,7 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 <td align="center"><sup><sub>97.980980%</sub></sup></td>
 <td align="center"><sup><sub>0.88159</sub></sup></td>
 <td align="center"><sup><sub>0.88323</sub></sup></td>
-<td align="left"><sup><sub>Another model has 97.52%/<b>0.89322</b></sub></sup></td>
+<td align="left"><sup><sub>another model has 97.52%/<b>0.89322</b></sub></sup></td>
 </tr>
 
 <tr>
@@ -91,6 +91,3 @@ After the competition, some of the networks were retrained using [mixup: Beyond 
 </tr>
 
 </tbody></table>
-
-
-<b>TODO</b>
