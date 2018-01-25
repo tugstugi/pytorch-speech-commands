@@ -2,8 +2,8 @@ Convolutional neural networks for [Google speech commands data set](https://rese
 with [PyTorch](http://pytorch.org/).
 
 # General
-Our team `but`, [Yuan Xu](https://github.com/xuyuan) and [Erdene-Ochir Tuguldur](https://github.com/tugstugi),
-participated in the Kaggle competition [TensorFlow Speech Recognition Challenge](https://www.kaggle.com/c/tensorflow-speech-recognition-challenge)
+We, [xuyuan](https://github.com/xuyuan) and [tugstugi](https://github.com/tugstugi), have participated
+in the Kaggle competition [TensorFlow Speech Recognition Challenge](https://www.kaggle.com/c/tensorflow-speech-recognition-challenge)
 and reached the 10-th place. This repository contains a simplified and cleaned up version of our team's code.
 
 # Features

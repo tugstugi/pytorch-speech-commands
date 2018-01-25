@@ -3,3 +3,4 @@ from .wideresnet import *
 from .dpn import *
 from .resnet import *
 from .densenet import *
+from .resnext import *
