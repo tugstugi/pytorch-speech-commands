@@ -6,6 +6,12 @@
 python train_speech_commands.py --model=vgg19_bn --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
 ```
 
+#### WideResNet 28-10
+* accuracy: 97.937089%, 97.922458% with crop, Kaggle private LB score: and  with crop, epoch time: ?
+```sh
+python train_speech_commands.py --model=wideresnet28_10 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
+```
+
 #### WideResNet 28-10D
 * accuracy: 97.702999%, 97.717630% with crop, Kaggle private LB score:0.89580 and 0.89568 with crop, epoch time: 2m10s
 ```sh
@@ -18,10 +24,22 @@ python train_speech_commands.py --model=wideresnet28_10D --optim=sgd --lr-schedu
 python train_speech_commands.py --model=wideresnet52_10 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
 ```
 
-#### DenseNet-BC (L=190, k=40)
-* accuracy: 97.117776%, 97.147037% with crop,  Kaggle private LB score: 0.89369 and 0.89521 with crop, epoch time: 20m
+### ResNext29 8x64
+*
 ```sh
-python train_speech_commands.py --model=wideresnet52_10 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=64
+python train_speech_commands.py --model=resnext29_8_64 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
+```
+
+### DPN92
+* accuracy: 97.190929%, 97.249451% with crop,  Kaggle private LB score: 0.89075 and 0.89286 with crop, epoch time: 3m45s
+```sh
+python train_speech_commands.py --model=dpn92 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
+```
+
+#### DenseNet-BC (L=190, k=40)
+* accuracy: 97.117776%, 97.147037% with crop,  Kaggle private LB score: 0.89369 and 0.89521 with crop, epoch time: 20m (P6000)
+```sh
+python train_speech_commands.py --model=densenet_bc_190_40 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=64
 ```
 
 ## CIFAR10

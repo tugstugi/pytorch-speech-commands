@@ -36,6 +36,16 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 </tr>
 
 <tr>
+<td align="left"><sup><sub>WRN-28-10</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>97.937089%</sub></sup></td>
+<td align="center"><sup><sub>97.922458%</sub></sup></td>
+<td align="center"><sup><sub></sub></sup></td>
+<td align="center"><sup><sub></sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
+</tr>
+
+<tr>
 <td align="left"><sup><sub>WRN-28-10-dropout</sub></sup></td>
 <td align="center"><sup><sub>-</sub></sup></td>
 <td align="center"><sup><sub>97.702999%</sub></sup></td>
@@ -52,7 +62,27 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 <td align="center"><sup><sub>97.980980%</sub></sup></td>
 <td align="center"><sup><sub>0.88159</sub></sup></td>
 <td align="center"><sup><sub>0.88323</sub></sup></td>
-<td align="left"><sup><sub>another model has 97.52%/<b>0.89322</b></sub></sup></td>
+<td align="left"><sup><sub>another trained model has 97.52%/<b>0.89322</b></sub></sup></td>
+</tr>
+
+<tr>
+<td align="left"><sup><sub>ResNext29 8x64</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub></sub></sup></td>
+<td align="center"><sup><sub></sub></sup></td>
+<td align="center"><sup><sub></sub></sup></td>
+<td align="center"><sup><sub></sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
+</tr>
+
+<tr>
+<td align="left"><sup><sub>DPN92</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>97.190929%</sub></sup></td>
+<td align="center"><sup><sub>97.249451%</sub></sup></td>
+<td align="center"><sup><sub>0.89075</sub></sup></td>
+<td align="center"><sup><sub>0.89286</sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
 </tr>
 
 <tr>

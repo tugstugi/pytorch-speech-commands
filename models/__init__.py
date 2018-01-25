@@ -11,7 +11,7 @@ available_models = [
     'wideresnet28_10', 'wideresnet28_10D', 'wideresnet52_10',
     'resnext29_8_64',
     'dpn92',
-    'densenet_bc_250_24', 'densenet_bc_190_40'
+    'densenet_bc_100_12', 'densenet_bc_250_24', 'densenet_bc_190_40'
 ]
 
 def create_model(model_name, num_classes, in_channels):
@@ -35,6 +35,8 @@ def create_model(model_name, num_classes, in_channels):
         model = CifarResNeXt(nlabels=num_classes, in_channels=in_channels)
     elif model_name == "dpn92":
         model = DPN92(num_classes=num_classes, in_channels=in_channels)
+    elif model_name == "densenet_bc_100_12":
+        model = DenseNet(depth=100, growthRate=12, compressionRate=2, num_classes=num_classes, in_channels=in_channels)
     elif model_name == "densenet_bc_250_24":
         model = DenseNet(depth=250, growthRate=24, compressionRate=2, num_classes=num_classes, in_channels=in_channels)
     elif model_name == "densenet_bc_190_40":
