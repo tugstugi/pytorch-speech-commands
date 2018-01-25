@@ -21,6 +21,7 @@ from tensorboardX import SummaryWriter
 import models
 from datasets import *
 from transforms import *
+from mixup import *
 
 parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--train-dataset", type=str, default='datasets/speech_commands/train', help='path of train dataset')
@@ -40,6 +41,7 @@ parser.add_argument("--max-epochs", type=int, default=70, help='max number of ep
 parser.add_argument("--resume", type=str, help='checkpoint file to resume')
 parser.add_argument("--model", choices=models.available_models, default=models.available_models[0], help='model of NN')
 parser.add_argument("--input", choices=['mel32'], default='mel32', help='input of NN')
+parser.add_argument('--mixup', action='store_true', help='use mixup')
 args = parser.parse_args()
 
 use_gpu = torch.cuda.is_available()
@@ -142,6 +144,9 @@ def train(epoch):
         inputs = torch.unsqueeze(inputs, 1)
         targets = batch['target']
 
+        if args.mixup:
+            inputs, targets = mixup(inputs, targets, num_classes=len(CLASSES))
+
         inputs = Variable(inputs, requires_grad=True)
         targets = Variable(targets, requires_grad=False)
 
@@ -151,7 +156,10 @@ def train(epoch):
 
         # forward/backward
         outputs = model(inputs)
-        loss = criterion(outputs, targets)
+        if args.mixup:
+            loss = mixup_cross_entropy_loss(outputs, targets)
+        else:
+            loss = criterion(outputs, targets)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -161,6 +169,9 @@ def train(epoch):
         global_step += 1
         running_loss += loss.data[0]
         pred = outputs.data.max(1, keepdim=True)[1]
+        if args.mixup:
+            targets = batch['target']
+            targets = Variable(targets, requires_grad=False).cuda(async=True)
         correct += pred.eq(targets.data.view_as(pred)).sum()
         total += targets.size(0)
 

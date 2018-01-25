@@ -6,8 +6,14 @@
 python train_speech_commands.py --model=vgg19_bn --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
 ```
 
+#### VGG19 BN with Mixup
+* accuracy: 97.483541%, 97.542063% with crop, Kaggle private LB score: 0.89521 and 0.89839 with crop, epoch time: 1m30s
+```sh
+python train_speech_commands.py --model=vgg19_bn --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96 --mixup
+```
+
 #### WideResNet 28-10
-* accuracy: 97.937089%, 97.922458% with crop, Kaggle private LB score: and  with crop, epoch time: ?
+* accuracy: 97.937089%, 97.922458% with crop, Kaggle private LB score: 0.88546 and 0.88699 with crop, epoch time: 2m5s
 ```sh
 python train_speech_commands.py --model=wideresnet28_10 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
 ```

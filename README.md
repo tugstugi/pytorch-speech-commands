@@ -18,7 +18,7 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 
 <table><tbody>
 <th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
-<th valign="bottom"><sup><sub>CIFAR-10<br/>test set<br/>accuracy</sub></sup></th>
+<th valign="bottom"><sup><sub>CIFAR10<br/>test set<br/>accuracy</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy with crop</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score</sub></sup></th>
@@ -40,8 +40,8 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 <td align="center"><sup><sub>-</sub></sup></td>
 <td align="center"><sup><sub>97.937089%</sub></sup></td>
 <td align="center"><sup><sub>97.922458%</sub></sup></td>
-<td align="center"><sup><sub></sub></sup></td>
-<td align="center"><sup><sub></sub></sup></td>
+<td align="center"><sup><sub>0.88546</sub></sup></td>
+<td align="center"><sup><sub>0.88699</sub></sup></td>
 <td align="left"><sup><sub></sub></sup></td>
 </tr>
 
@@ -103,12 +103,22 @@ After the competition, some of the networks were retrained using [mixup: Beyond 
 
 <table><tbody>
 <th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
-<th valign="bottom"><sup><sub>CIFAR-10<br/>test set<br/>accuracy</sub></sup></th>
+<th valign="bottom"><sup><sub>CIFAR10<br/>test set<br/>accuracy</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>test set<br/>accuracy with crop</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score</sub></sup></th>
 <th valign="bottom"><sup><sub>Speech Commands<br/>Kaggle private LB<br/>score with crop</sub></sup></th>
 <th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Remarks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
+
+<tr>
+<td align="left"><sup><sub>VGG19 BN</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>97.483541%</sub></sup></td>
+<td align="center"><sup><sub>97.542063%</sub></sup></td>
+<td align="center"><sup><sub>0.89521</sub></sup></td>
+<td align="center"><sup><sub>0.89839</sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
+</tr>
 
 <tr>
 <td align="left"><sup><sub>WRN-52-10</sub></sup></td>
