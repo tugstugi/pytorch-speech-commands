@@ -81,7 +81,7 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 <td align="center"><sup><sub>97.190929%</sub></sup></td>
 <td align="center"><sup><sub>97.161668%</sub></sup></td>
 <td align="center"><sup><sub>0.89533</sub></sup></td>
-<td align="center"><sup><b>0.89733</b><sub></sub></sup></td>
+<td align="center"><sup><sub><b>0.89733</b></sub></sup></td>
 <td align="left"><sup><sub></sub></sup></td>
 </tr>
 
