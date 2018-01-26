@@ -31,7 +31,7 @@ python train_speech_commands.py --model=wideresnet52_10 --optim=sgd --lr-schedul
 ```
 
 ### ResNext29 8x64
-*
+* accuracy: 97.190929%, 97.161668% with crop, Kaggle private LB score: 0.89533 and 0.89733 with crop, epoch time: 4m36
 ```sh
 python train_speech_commands.py --model=resnext29_8_64 --optim=sgd --lr-scheduler=plateau --learning-rate=0.01 --lr-scheduler-patience=5 --max-epochs=70 --batch-size=96
 ```

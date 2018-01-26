@@ -36,6 +36,16 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 </tr>
 
 <tr>
+<td align="left"><sup><sub>ResNet32</sub></sup></td>
+<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>96.181419%</sub></sup></td>
+<td align="center"><sup><sub>96.196050%</sub></sup></td>
+<td align="center"><sup><sub>0.87078</sub></sup></td>
+<td align="center"><sup><sub>0.87419</sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
+</tr>
+
+<tr>
 <td align="left"><sup><sub>WRN-28-10</sub></sup></td>
 <td align="center"><sup><sub>-</sub></sup></td>
 <td align="center"><sup><sub>97.937089%</sub></sup></td>
@@ -68,10 +78,10 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 <tr>
 <td align="left"><sup><sub>ResNext29 8x64</sub></sup></td>
 <td align="center"><sup><sub>-</sub></sup></td>
-<td align="center"><sup><sub></sub></sup></td>
-<td align="center"><sup><sub></sub></sup></td>
-<td align="center"><sup><sub></sub></sup></td>
-<td align="center"><sup><sub></sub></sup></td>
+<td align="center"><sup><sub>97.190929%</sub></sup></td>
+<td align="center"><sup><sub>97.161668%</sub></sup></td>
+<td align="center"><sup><sub>0.89533</sub></sup></td>
+<td align="center"><sup><b>0.89733</b><sub></sub></sup></td>
 <td align="left"><sup><sub></sub></sup></td>
 </tr>
 
