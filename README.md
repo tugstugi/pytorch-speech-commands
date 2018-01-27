@@ -82,7 +82,7 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 <td align="center"><sup><sub>97.161668%</sub></sup></td>
 <td align="center"><sup><sub>0.89533</sub></sup></td>
 <td align="center"><sup><sub><b>0.89733</b></sub></sup></td>
-<td align="left"><sup><sub></sub></sup></td>
+<td align="left"><sup><sub>our best model during competition</sub></sup></td>
 </tr>
 
 <tr>
@@ -92,6 +92,16 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 <td align="center"><sup><sub>97.249451%</sub></sup></td>
 <td align="center"><sup><sub>0.89075</sub></sup></td>
 <td align="center"><sup><sub>0.89286</sub></sup></td>
+<td align="left"><sup><sub></sub></sup></td>
+</tr>
+
+<tr>
+<td align="left"><sup><sub>DenseNet-BC (L=100, k=12)</sub></sup></td>
+<td align="center"><sup><sub>95.52%</sub></sup></td>
+<td align="center"><sup><sub>97.161668%</sub></sup></td>
+<td align="center"><sup><sub>97.147037%</sub></sup></td>
+<td align="center"><sup><sub>0.88946</sub></sup></td>
+<td align="center"><sup><sub>0.89134</sub></sup></td>
 <td align="left"><sup><sub></sub></sup></td>
 </tr>
 
