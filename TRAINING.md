@@ -1,3 +1,10 @@
+## Dependencies
+* Anaconda 5.0.1 for Python 3.6
+* PyTorch 0.3
+* librosa 0.5.1
+* [tnt](https://github.com/pytorch/tnt)
+* [tensorboardX](https://github.com/lanpa/tensorboard-pytorch)
+
 ## Google Speech Commands
 
 #### VGG19 BN
