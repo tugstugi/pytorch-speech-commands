@@ -7,6 +7,8 @@
 
 ## Google Speech Commands
 
+Before training, execute `./download_speech_commands_dataset.sh` to download the speech commands data set.
+
 #### VGG19 BN
 * accuracy: 97.337235%, 97.527432% with crop, Kaggle private LB score: 0.87454 and 0.88030 with crop, epoch time: 1m25s
 ```sh
