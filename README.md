@@ -14,7 +14,7 @@ and reached the 10-th place. This repository contains a simplified and cleaned u
 
 # Results
 Due to time limit of the competition, we have trained most of the nets with `sgd` using `ReduceLROnPlateau` for 70 epochs.
-For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping the train process will sometimes produce a better score in Kaggle.
+For the training parameters and dependencies, see [TRAINING.md](TRAINING.md). Earlier stopping the train process will sometimes produce a better score in Kaggle.
 
 <table><tbody>
 <th valign="bottom"><sup><sub>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</sub></sup></th>
