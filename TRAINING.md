@@ -62,6 +62,12 @@ python train_speech_commands.py --model=densenet_bc_190_40 --optim=sgd --lr-sche
 python train_cifar10.py --model=vgg19_bn --optim=sgd --learning-rate=0.1 --lr-scheduler=step --lr-scheduler-step-size=60 --max-epochs=180
 ```
 
+#### WideResNet 28-10D
+* accuracy: 96.22%, epoch time: ?
+```sh
+python train_cifar10.py --model=wideresnet28_10D --optim=sgd --learning-rate=0.1 --lr-scheduler=step --lr-scheduler-step-size=60 --max-epochs=240 --lr-scheduler-gamma=0.2 --weight-decay=5e-4
+```
+
 #### DenseNet-BC (L=100, k=12)
 * accuracy: 95.52%, epoch time: 1m17s
 ```sh
