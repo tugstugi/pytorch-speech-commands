@@ -57,7 +57,7 @@ For the training parameters, see [TRAINING.md](TRAINING.md). Earlier stopping th
 
 <tr>
 <td align="left"><sup><sub>WRN-28-10-dropout</sub></sup></td>
-<td align="center"><sup><sub>-</sub></sup></td>
+<td align="center"><sup><sub>96.22%</sub></sup></td>
 <td align="center"><sup><sub>97.702999%</sub></sup></td>
 <td align="center"><sup><sub>97.717630%</sub></sup></td>
 <td align="center"><sup><sub>0.89580</sub></sup></td>
