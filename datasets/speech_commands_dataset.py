@@ -80,7 +80,7 @@ class BackgroundNoiseDataset(Dataset):
         samples = []
         for f in audio_files:
             path = os.path.join(folder, f)
-            s, sr = librosa.load(path, sample_rate)
+            s, sr = librosa.load(path, sr=sample_rate)
             samples.append(s)
 
         samples = np.hstack(samples)

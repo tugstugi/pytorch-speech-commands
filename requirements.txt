@@ -1,0 +1,8 @@
+librosa==0.10.1
+matplotlib==3.8.2
+tensorboardX==2.6.2.2
+torch==2.1.2
+torchaudio==2.1.2
+torchvision==0.16.2
+tqdm==4.66.1
+torchnet==0.0.4
