@@ -152,7 +152,7 @@ def train(epoch):
 
         if use_gpu:
             inputs = inputs.cuda()
-            targets = targets.cuda(async=True)
+            targets = targets.cuda()
 
         # forward/backward
         outputs = model(inputs)
@@ -167,15 +167,15 @@ def train(epoch):
         # statistics
         it += 1
         global_step += 1
-        running_loss += loss.data[0]
+        running_loss += loss.item()
         pred = outputs.data.max(1, keepdim=True)[1]
         if args.mixup:
             targets = batch['target']
-            targets = Variable(targets, requires_grad=False).cuda(async=True)
+            targets = Variable(targets, requires_grad=False).cuda()
         correct += pred.eq(targets.data.view_as(pred)).sum()
         total += targets.size(0)
 
-        writer.add_scalar('%s/loss' % phase, loss.data[0], global_step)
+        writer.add_scalar('%s/loss' % phase, loss.item(), global_step)
 
         # update the progress bar
         pbar.set_postfix({
@@ -210,7 +210,7 @@ def valid(epoch):
 
         if use_gpu:
             inputs = inputs.cuda()
-            targets = targets.cuda(async=True)
+            targets = targets.cuda()
 
         # forward
         outputs = model(inputs)
@@ -219,12 +219,12 @@ def valid(epoch):
         # statistics
         it += 1
         global_step += 1
-        running_loss += loss.data[0]
+        running_loss += loss.item()
         pred = outputs.data.max(1, keepdim=True)[1]
         correct += pred.eq(targets.data.view_as(pred)).sum()
         total += targets.size(0)
 
-        writer.add_scalar('%s/loss' % phase, loss.data[0], global_step)
+        writer.add_scalar('%s/loss' % phase, loss.item(), global_step)
 
         # update the progress bar
         pbar.set_postfix({
