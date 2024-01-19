@@ -89,12 +89,12 @@ def test():
         if args.multi_crop:
             inputs = multi_crop(inputs)
 
-        inputs = Variable(inputs, volatile = True)
+        inputs = Variable(inputs, requires_grad=False)
         targets = Variable(targets, requires_grad=False)
 
         if use_gpu:
             inputs = inputs.cuda()
-            targets = targets.cuda(async=True)
+            targets = targets.cuda()
 
         # forward
         outputs = model(inputs)
@@ -111,7 +111,7 @@ def test():
         pred = outputs.data.max(1, keepdim=True)[1]
         correct += pred.eq(targets.data.view_as(pred)).sum()
         total += targets.size(0)
-        confusion_matrix.add(pred, targets.data)
+        confusion_matrix.add(pred.squeeze(), targets.data)
 
         filenames = batch['path']
         for j in range(len(pred)):
